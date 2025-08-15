@@ -28,25 +28,29 @@ jobs:
 
       - name: Generate manifest
         run: |
-          # 创建临时目录
           mkdir -p release_assets
           
-          # 生成 manifest.json
-          echo '{ "last_updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")", "resources": [' > manifest.json
+          # 创建正确的 JSON 结构
+          echo '{ "last_updated": "'${{ env.CURRENT_DATETIME }}'", "resources": [' > manifest.json
           
           find dp_files -name "*.dp" -print0 | while IFS= read -r -d '' file; do
             # 计算 SHA256
             sha=$(sha256sum "$file" | awk '{print $1}')
             
-            # 获取相对路径
+            # 获取文件名和路径
+            filename=$(basename "$file")
             rel_path="${file#dp_files/}"
+            
+            # 生成资源 ID（基于文件路径）
+            resource_id="${rel_path%.dp}"
+            resource_id="${resource_id//\//_}"  # 将斜杠替换为下划线
             
             # 添加到 manifest
             echo "{
-              \"id\": \"${rel_path%.*}\",
-              \"file\": \"$(basename "$file")\",
+              \"id\": \"$resource_id\",
+              \"file\": \"$filename\",
               \"path\": \"$rel_path\",
-              \"url\": \"https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_TAG }}/$(basename "$file")\",
+              \"url\": \"https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_TAG }}/$filename\",
               \"sha256\": \"$sha\"
             }," >> manifest.json
             
@@ -55,7 +59,9 @@ jobs:
           done
           
           # 完成 JSON 格式
-          sed -i '$ s/,$//' manifest.json
+          if [ -s manifest.json ]; then
+            sed -i '$ s/,$//' manifest.json
+          fi
           echo ']}' >> manifest.json
           
           # 添加 manifest 到发布资产
