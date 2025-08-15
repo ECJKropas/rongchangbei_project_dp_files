@@ -2,7 +2,6 @@ name: Auto Release DP Files
 
 permissions:
   contents: write
-  releases: write  # Added this required permission
 
 on:
   push:
