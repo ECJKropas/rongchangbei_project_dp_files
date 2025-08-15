@@ -7,8 +7,7 @@ on:
   push:
     paths:
       - 'dp_files/**'
-    branches:
-      - main  # 指定触发分支
+    branches: [main]
 
 jobs:
   release:
@@ -17,12 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整历史记录
+          fetch-depth: 0
+          persist-credentials: true  # 允许后续推送
 
       - name: Setup environment
         id: setup
         run: |
-          # 生成唯一的版本标签 (vYYYYMMDD-HHMMSS)
           TIMESTAMP=$(date -u +"%Y%m%d-%H%M%S")
           echo "RELEASE_TAG=v$TIMESTAMP" >> $GITHUB_ENV
           echo "Using release tag: $RELEASE_TAG"
@@ -35,7 +34,6 @@ jobs:
           # 生成 manifest.json
           echo '{ "last_updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")", "resources": [' > manifest.json
           
-          # 遍历所有 .dp 文件
           find dp_files -name "*.dp" -print0 | while IFS= read -r -d '' file; do
             # 计算 SHA256
             sha=$(sha256sum "$file" | awk '{print $1}')
@@ -63,13 +61,20 @@ jobs:
           # 添加 manifest 到发布资产
           cp manifest.json release_assets/
 
+      - name: Commit to repository
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add manifest.json
+          git commit -m "Update manifest for release ${{ env.RELEASE_TAG }} [skip ci]"
+          git push origin main
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.RELEASE_TAG }}  # 使用生成的唯一标签
+          tag_name: ${{ env.RELEASE_TAG }}
           name: "DP Resources Release ${{ env.RELEASE_TAG }}"
           body: "Automated release of .dp resource files"
-          files: |
-            release_assets/*
+          files: release_assets/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
