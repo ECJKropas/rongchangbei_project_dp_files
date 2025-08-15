@@ -2,11 +2,12 @@ name: Auto Release DP Files
 
 permissions:
   contents: write
+  releases: write  # Added this required permission
 
 on:
   push:
     paths:
-      - 'dp_files/**'  # 仅当dp文件变化时触发
+      - 'dp_files/**'
 
 jobs:
   release:
@@ -15,26 +16,31 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Generate manifest
+        id: manifest
         run: |
-          # 生成 SHA256 校验码（示例脚本）
+          # Generate timestamp for tag
+          echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
+          
+          # Generate manifest.json
           echo '{ "last_updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")", "resources": [' > manifest.json
           find dp_files -name "*.dp" | while read file; do
             sha=$(sha256sum "$file" | awk '{print $1}')
             echo "{
               \"file\": \"$(basename $file)\",
-              \"url\": \"https://github.com/${{ github.repository }}/releases/download/$(basename ${file%.*})/$(basename $file)\",
+              \"url\": \"https://github.com/${{ github.repository }}/releases/download/v${TIMESTAMP}/$(basename $file)\",
               \"sha256\": \"$sha\"
             }," >> manifest.json
           done
-          sed -i '$ s/,$//' manifest.json  # 移除末尾逗号
+          sed -i '$ s/,$//' manifest.json
           echo ']}' >> manifest.json
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "v$(date +%s)"  # 使用时间戳作为唯一标签
+          tag_name: "v${{ env.TIMESTAMP }}"
+          name: "Release v${{ env.TIMESTAMP }}"
           files: |
             manifest.json
-            dp_files/**/*.dp
+            dp_files/*.dp  # Adjusted to match your actual file structure
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
