@@ -1,1 +1,9 @@
-{}
+{ "last_updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")", "resources": [
+{
+    "id": "job_meeting",
+    "file": "job_meeting.dp",
+    "path": "job_meeting.dp",
+    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250815-163026/job_meeting.dp",
+    "sha256": "c1b35670e215df298ebd53fbc65390f54f74e3f8d7e740f053434bf581678179"
+  }
+]}
