@@ -1,5 +1,8 @@
 name: Auto Release DP Files
 
+permissions:
+  contents: write
+
 on:
   push:
     paths:
