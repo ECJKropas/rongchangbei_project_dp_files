@@ -1,10 +1,11 @@
-{ "last_updated": "2025-08-16 16:14:11 UTC", "resources": [
+{ "last_updated": "2025-08-16 16:19:31 UTC", "resources": [
 {
     "id": "job_meeting",
     "file": "job_meeting.dp",
     "path": "job_meeting.dp",
+    "package_name": "默认对话包",
     "description": "在职场上与老板开会时…… | 包含4条建议",
-    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250816-161411/job_meeting.dp",
-    "sha256": "a1f293286b5220dd669ace8dc5c5bb2003b09b831efac6608d5d78ceae8fa139"
+    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250816-161931/job_meeting.dp",
+    "sha256": "8bc7d1298a144593d6f2f0da83880ce241dbbbb6db995882f4ba90b7df1db9b1"
   }
 ]}
