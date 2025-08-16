@@ -1,9 +1,9 @@
-{ "last_updated": "", "resources": [
+{ "last_updated": "2025-08-16 04:38:52 UTC", "resources": [
 {
     "id": "job_meeting",
     "file": "job_meeting.dp",
     "path": "job_meeting.dp",
-    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250815-163450/job_meeting.dp",
-    "sha256": "8a21e100b7b46da4a490a7fdd766d8830874d4f110ebf9d39d0ba66af3ce5fca"
+    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250816-043852/job_meeting.dp",
+    "sha256": "2c3117a9bd418e768b10a2a92a1cd3c938bf07ffcec005d32d3443db5fc9124c"
   }
 ]}
