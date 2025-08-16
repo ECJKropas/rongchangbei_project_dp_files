@@ -23,7 +23,9 @@ jobs:
         id: setup
         run: |
           TIMESTAMP=$(date -u +"%Y%m%d-%H%M%S")
+          CURRENT_DATETIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           echo "RELEASE_TAG=v$TIMESTAMP" >> $GITHUB_ENV
+          echo "CURRENT_DATETIME=$CURRENT_DATETIME" >> $GITHUB_ENV
           echo "Using release tag: $RELEASE_TAG"
 
       - name: Generate manifest
