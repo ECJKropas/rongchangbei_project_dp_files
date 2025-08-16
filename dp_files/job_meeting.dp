@@ -1,6 +1,8 @@
 {
     "type": "dialogue_package",
-    "name": "job_meeting",
+    "package_name": "默认对话包",
+    "file_name": "job_meeting",
+    "description": "在职场上与老板开会时…… | 包含4条建议",
     "response_count": 3,
     "scenario_description": "在职场上与老板开会时，想要获得认可并最终晋升",
     "message": [
@@ -35,37 +37,5 @@
     ],
     "modification": "",
     "user_opinion": "把每次会议当作「为老板提供可窃取的智慧」的机会。当你的方案开始出现在老板的向上汇报PPT里，晋升只是时间问题。", 
-    "scenario_supplement": "",
-    "roles": [
-        {
-            "id": "user",
-            "name": "我自己",
-            "color": 4278255361,
-            "icon": 57344
-        },
-        {
-            "id": "tip",
-            "name": "Tips",
-            "color": 4278190335,
-            "icon": 58605
-        },
-        {
-            "id": "colleague_1",
-            "name": "同事1",
-            "color": 16310130,
-            "icon": 58605
-        },
-        {
-            "id": "boss",
-            "name": "老板",
-            "color": 16310130,
-            "icon": 58605
-        },
-        {
-            "id": "system",
-            "name": "system",
-            "color": 13903127,
-            "icon": 57345
-        }
-    ]
+    "scenario_supplement": ""
 }

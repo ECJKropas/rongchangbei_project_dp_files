@@ -45,11 +45,21 @@ jobs:
             resource_id="${rel_path%.dp}"
             resource_id="${resource_id//\//_}"  # 将斜杠替换为下划线
             
+            # 提取description字段
+            description=$(jq -r '.description' "$file" 2>/dev/null || echo "")
+            if [ -z "$description" ] || [ "$description" = "null" ]; then
+              description="No description available"
+            fi
+            
+            # 转义description中的特殊字符
+            description_escaped=$(echo "$description" | sed 's/"/\\"/g')
+            
             # 添加到 manifest
             echo "{
               \"id\": \"$resource_id\",
               \"file\": \"$filename\",
               \"path\": \"$rel_path\",
+              \"description\": \"$description_escaped\",
               \"url\": \"https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_TAG }}/$filename\",
               \"sha256\": \"$sha\"
             }," >> manifest.json
@@ -63,6 +73,13 @@ jobs:
             sed -i '$ s/,$//' manifest.json
           fi
           echo ']}' >> manifest.json
+          
+          # 验证manifest.json格式
+          if ! jq empty manifest.json 2>/dev/null; then
+            echo "Error: Invalid JSON in manifest.json"
+            cat manifest.json
+            exit 1
+          fi
           
           # 添加 manifest 到发布资产
           cp manifest.json release_assets/
