@@ -58,10 +58,17 @@ jobs:
             if [ -z "$package_name" ] || [ "$package_name" = "null" ]; then
               package_name="Default Package"
             fi
+
+            # 提取subject_matter字段
+            subject_matter=$(jq -r '.subject_matter' "$file" 2>/dev/null || echo "")
+            if [ -z "$subject_matter" ] || [ "$subject_matter" = "null" ]; then
+              subject_matter="Default Package"
+            fi
             
             # 转义字符串中的特殊字符
             description_escaped=$(echo "$description" | sed 's/"/\\"/g')
             package_name_escaped=$(echo "$package_name" | sed 's/"/\\"/g')
+            subject_matter_escaped=$(echo "$subject_matter" | sed 's/"/\\"/g')
             
             # 添加到 manifest
             echo "{
@@ -70,6 +77,7 @@ jobs:
               \"path\": \"$rel_path\",
               \"package_name\": \"$package_name_escaped\",
               \"description\": \"$description_escaped\",
+              \"subject_matter\": \"$subject_matter_escaped\",
               \"url\": \"https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_TAG }}/$filename\",
               \"sha256\": \"$sha\"
             }," >> manifest.json
