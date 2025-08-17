@@ -64,6 +64,12 @@ jobs:
             if [ -z "$subject_matter" ] || [ "$subject_matter" = "null" ]; then
               subject_matter="Default Package"
             fi
+
+            # 提取fee_required字段
+            fee_required=$(jq -r '.fee_required' "$file" 2>/dev/null || echo "false")
+            if [ -z "$fee_required" ] || [ "$fee_required" = "null" ]; then
+              fee_required="false"
+            fi
             
             # 转义字符串中的特殊字符
             description_escaped=$(echo "$description" | sed 's/"/\\"/g')
@@ -78,6 +84,7 @@ jobs:
               \"package_name\": \"$package_name_escaped\",
               \"description\": \"$description_escaped\",
               \"subject_matter\": \"$subject_matter_escaped\",
+              \"fee_required\": $fee_required,
               \"url\": \"https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_TAG }}/$filename\",
               \"sha256\": \"$sha\"
             }," >> manifest.json
