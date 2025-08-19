@@ -6,9 +6,10 @@
     "subject_matter": "默认",
     "fee_required": false,
     "scenario_description": "对话情景描述文本",
+    "response_count": 5,
     "message": [
         {
-            "idx":0,
+            "message_id":"mgs_00000FF",
             "name":"system",
             "content":"Created a conversation",
             "time":"2025/8/11 12:34:56",
