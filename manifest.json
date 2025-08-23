@@ -1,4 +1,4 @@
-{ "last_updated": "2025-08-23 07:24:06 UTC", "resources": [
+{ "last_updated": "2025-08-23 07:26:07 UTC", "resources": [
 {
     "id": "xiangqin",
     "file": "xiangqin.dp",
@@ -7,8 +7,8 @@
     "description": "相亲是一场“短平快”的社交，核心目标是让对方在1-2小时内产生“想继续了解你”的冲动，而不是展示你有多完美。以下从策略、话术、细节三个维度给你一份“高效通关指南”：",
     "subject_matter": "人生大事",
     "fee_required": false,
-    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250823-072406/xiangqin.dp",
-    "sha256": "22a9412adea95e86c5ea1b77617f3db70345ad7d16e4277e4040dc15fbe166e0"
+    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250823-072607/xiangqin.dp",
+    "sha256": "4f47f915f93eb1edc792991ff51753f091956ae35739b3e63f740f39407ea1f4"
   },
 {
     "id": "job_meeting",
@@ -18,7 +18,7 @@
     "description": "在职场上与老板开会时…… | 包含4条建议",
     "subject_matter": "职场",
     "fee_required": false,
-    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250823-072406/job_meeting.dp",
+    "url": "https://github.com/ECJKropas/rongchangbei_project_dp_files/releases/download/v20250823-072607/job_meeting.dp",
     "sha256": "59eec56272f6374a21448f1b43f363161e88f9e0ecb1e6dd92480409b4e6104b"
   }
 ]}
